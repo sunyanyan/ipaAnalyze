@@ -23,8 +23,9 @@
 
 5. 结果：
 
-!()[./test1.png]
-!()[./test2.png]
-!()[./test3.png]
-!()[./test3.png]
+
+![](./test/test1.png)
+![](./test/test2.png)
+![](./test/test3.png)
+![](./test/test4.png)
 
