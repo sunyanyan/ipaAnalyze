@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>包体大小</title>
+  <script src="echarts.js"></script>
+</head>
+
+<body>
+  <div id="ipaSizeView" style="width: 1200px;height:600px;"></div>
+  <!-- <div id="ipaSizeView2" style="width: 1200px;height:600px;"></div> -->
+  <div id="appContentSizeView" style="width: 1200px;height:600px;"></div>
+  <div id="appContentSizeView2" style="width: 1200px;height:600px;"></div>
+  <div id="linkmapSizeView" style="width: 1200px;height:400px;"></div>
+  <div id="linkmapSizeView2" style="width: 1200px;height:800px;"></div>
+  <script>
+    var myChart = echarts.init(document.getElementById('ipaSizeView'));
+    var option = {
+      title: {
+        text: 'ipa大小/版本号'
+      },
+      tooltip: {},
+      legend: {
+        data: ['ipaSize','ipaSize2']
+      },
+      grid: {
+    left: '10%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+      xAxis: {
+        data: ${ipaVersions},
+        axisLabel: {
+          rotate: -90,
+          // width:100,
+          // overflow: "break"
+        },
+      },
+      yAxis: {
+        min: function (value) {
+          return value.min - 5;
+        }, max: function (value) {
+          return value.max + 5;
+        }
+        // scale: true
+      },
+      series: [
+        {
+          name: 'ipaSize',
+          type: 'bar',
+          data: ${ipaVersionSizes},
+        },
+        {
+          name: 'ipaSize2',
+          type: 'line',
+          data: ${ipaVersionSizes},
+        }
+      ]
+    };
+    myChart.setOption(option);
+  </script>
+  <script>
+    var myChart = echarts.init(document.getElementById('ipaSizeView2'));
+    var option = {
+      title: {
+        text: 'ipa大小/版本号'
+      },
+      grid: {
+    left: '10%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+      tooltip: {},
+      legend: {
+        data: ['ipaSize']
+      },
+      xAxis: {
+        type: 'category',
+        data: ${ipaVersions},
+        axisLabel: {
+          rotate: -90,
+          // width:100,
+          // overflow: "break"
+        },
+      },
+      yAxis: {
+        min: function (value) {
+          return value.min - 5;
+        },
+        max: function (value) {
+          return value.max + 5;
+        }
+        // scale: true
+      },
+      series: [
+        {
+          name: 'ipaSize',
+          type: 'line',
+          data: ${ipaVersionSizes},
+        }
+      ]
+    };
+    myChart.setOption(option);
+  </script>
+  
+  <script>
+    var myChart = echarts.init(document.getElementById('appContentSizeView'));
+    option = {
+      title: {
+        text: '版本size/App内容'
+      },
+      tooltip: {
+        trigger: 'axis'
+      },
+      grid: {
+    left: '10%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+      legend: {
+        data: ${ipaVersions},
+        left: "22%",
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {}
+        }
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ${appConntentJsonNameTypes},
+      },
+      yAxis: {
+        type: 'value',
+        scale: true,
+      },
+      series: [
+      ${appContentSeries}
+      ]
+    };
+    myChart.setOption(option);
+  </script>
+
+<script>
+  var myChart = echarts.init(document.getElementById('appContentSizeView2'));
+  option = {
+    title: {
+      text: 'App内容size/版本'
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    grid: {
+    left: '10%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+    legend: {
+      data: ${appConntentJsonNameTypes},
+      left: "22%",
+    },
+    toolbox: {
+      feature: {
+        saveAsImage: {}
+      }
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ${ipaVersions},
+      axisLabel: {
+          rotate: -90,
+          // width:100,
+          // overflow: "break"
+        },
+    },
+    yAxis: {
+      type: 'value',
+      scale: true,
+    },
+    series: [
+    ${appContentSeries2}
+    ]
+  };
+  myChart.setOption(option);
+</script>
+
+<script>
+  var myChart = echarts.init(document.getElementById('linkmapSizeView'));
+  option = {
+    title: {
+      text: 'linkMap前二十模块大小'
+    },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      // Use axis to trigger tooltip
+      type: 'shadow' // 'shadow' as default; can also be 'line' or 'shadow'
+    }
+  },
+  legend: {
+    left: "22%",
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: {
+    type: 'value'
+  },
+  yAxis: {
+    type: 'category',
+    data: ${ipaVersions},
+  },
+  series: [
+  ${appLinkMapSeries}
+  ]
+};
+myChart.setOption(option);
+</script>
+
+<script>
+  var myChart = echarts.init(document.getElementById('linkmapSizeView2'));
+  option = {
+    title: {
+      text: '${newestVersionName} linkmap POPO前20模块',
+    },
+  tooltip: {
+  },
+  grid: {
+    left: '10%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  yAxis: {
+    type: 'category',
+    data: ${newestVersionTop20ModuleNames},
+  },
+  xAxis: {
+    type: 'value',
+    scale: true
+  },
+  series: [
+    {
+      data: ${newestVersionTop20ModuleSizes},
+      type: 'bar'
+    }
+  ]
+};
+myChart.setOption(option);
+</script>
+
+
+</body>
+
+</html>
